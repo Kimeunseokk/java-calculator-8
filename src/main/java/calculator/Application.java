@@ -1,18 +1,15 @@
 package calculator;
 
-import java.util.Scanner;
-
 import camp.nextstep.edu.missionutils.Console;
 
 public class Application { // 예외처리방법 ---> try-catch 
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        Scanner scanner = new Scanner(System.in);
         System.out.println("덧셈할 문자열을 입력해 주세요 : ");
         String num = Console.readLine();
 
-        
         try{
+        
             int result = plus(num);
             System.out.println("결과 : "+result);
         }
@@ -20,11 +17,14 @@ public class Application { // 예외처리방법 ---> try-catch
             System.out.println(e.getMessage());
             throw e;
         }
-        scanner.close();
         
     }
 
     public static int plus(String num){
+        
+        if(num == null || num.trim().isEmpty()){
+            throw new IllegalArgumentException("값이 입력되지 않았습니다.");
+        }
 
         String[] number;
 
@@ -37,13 +37,13 @@ public class Application { // 예외처리방법 ---> try-catch
             index = num.indexOf("\\n");
             String xay = num.substring(index2+2, index);
             String subindex = num.substring(index+2);
-            number = subindex.split(xay+"|,|:");
+            number = subindex.split(xay);
         }    
         else if(index != -1 && index2 != -1){ // \n과 //이 문자열에 모두 존재할떄 
                 String xay = num.substring(index2+2, index); // String.substring(x,y) ----> 문자열 일부(인덱스x와 y사이) 잘라내서 추출하기
                 //number[index2:index]; ---> 이건 파이썬문법
                 String subindex = num.substring(index+1); // String.substring(x) ---> x의 인덱스에서부터 끝까지 추출하기
-                number = subindex.split(xay);
+                number = subindex.split(xay+"|,|:");
             }
             else throw new IllegalArgumentException("잘못된 커스텀 구분자가 입력되었습니다");
         }

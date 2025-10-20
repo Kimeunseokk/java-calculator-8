@@ -24,11 +24,11 @@ class ApplicationTest extends NsTest {
         );
     }
     @Test
-    void 공백테스트() {
-        assertSimpleTest(() -> {
-            run();
-            assertThat(output()).contains("결과 : 1");
-        });
+    void 공백_테스트() {
+        assertSimpleTest(() -> 
+           assertThatThrownBy(() -> runException("-1,2,3"))
+                .isInstanceOf(IllegalArgumentException.class)
+    );
     }
 
     @Override
